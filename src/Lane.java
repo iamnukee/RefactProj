@@ -131,11 +131,16 @@
  * 
  */
 
+import LaneScoring.LaneContext;
+import LaneScoring.OpenFrame;
+import LaneScoring.ScoringState;
+import LaneScoring.Strike;
+
 import java.util.Vector;
 import java.util.Iterator;
 import java.util.HashMap;
 import java.util.Date;
-
+//
 public class Lane extends Thread implements PinsetterObserver {	
 	private Party party;
 	private Pinsetter setter;
@@ -424,16 +429,65 @@ public class Lane extends Thread implements PinsetterObserver {
 	 *
 	 * Method that calculates a bowlers score
 	 * 
-	 * @param Cur		The bowler that is currently up
+	 * @param cur		The bowler that is currently up
 	 * @param frame	The frame the current bowler is on
 	 * 
 	 * @return			The bowlers total score
 	 */
-	private int getScore( Bowler Cur, int frame) {
-		int[] curScore;
-		int strikeballs = 0;
+	private int getScore( Bowler cur, int frame) {
+		/**
+         * Getting Lane variable states
+         * For:
+         * cumulScores, bowlIndex, scores, ball,
+		 */
+//        System.out.println("<><><><><><><><><><><><><><><><><><><><><>");
+//        System.out.println("@Params: Frame -> " + frame);
+//        System.out.println("@LaneState:");
+//        System.out.print("CumulScores-> ");
+//        for (int i = 0; i != 10; i++){
+//            System.out.print("<"+i+">"+cumulScores[bowlIndex][i]);
+//        }
+//        System.out.println();
+//        System.out.println("BowlIndex: " + bowlIndex);
+//        //Score is a hashmap with the bowler obj as a key and returns an int[]
+//        System.out.print("Scores-> ");
+//        for (int i = 0; i != ((int[])scores.get(cur)).length; i++){
+//            System.out.print("<"+i+">" + ((int[])scores.get(cur))[i]);
+//        }
+//        System.out.println();
+//        System.out.println("Ball: " + ball);
+        /**
+         * Got Lane variable states
+         */
+		//Version 2
+        int[] scoreArray = (int[])scores.get(cur);
+        LaneContext context = LaneContext.getContext();
+        context.update(ball, scoreArray, cumulScores);
+        context.scoreGame();
+
+
+        //Version 1
+//
+//        for (int i = 0; i != 10; i++){
+//			cumulScores[bowlIndex][i] = 0;
+//		  }
+//        boolean endOfScore = false;
+//        int[] scoreArray = (int[])scores.get(cur);
+//        int strikeballs = 0;
+//        for(int x = 0 ; x < scoreArray.length && !endOfScore; x++ ){
+//            System.out.println("<Ball: " + x);
+//            ScoringState state = ScoringState.pickStratagy(scoreArray,x);
+//            strikeballs += state.getScore(x ,scoreArray, cumulScores);
+//            if(!(state instanceof OpenFrame)) x++;
+//            if(scoreArray[x+1] == -1) endOfScore = true;
+//        }
+
+/*
+        //Origingal
+        int[] curScore;
+		//int strikeballs = 0;
 		int totalScore = 0;
-		curScore = (int[]) scores.get(Cur);
+		curScore = (int[]) scores.get(cur);
 		for (int i = 0; i != 10; i++){
 			cumulScores[bowlIndex][i] = 0;
 		}
@@ -442,10 +496,10 @@ public class Lane extends Thread implements PinsetterObserver {
 		for (int i = 0; i != current+2; i++){
 			//Spare:
 			if( i%2 == 1 && curScore[i - 1] + curScore[i] == 10 && i < current - 1 && i < 19){
-				//This ball was a the second of a spare.  
+				//This ball was a the second of a spare.
 				//Also, we're not on the current ball.
 				//Add the next ball to the ith one in cumul.
-				cumulScores[bowlIndex][(i/2)] += curScore[i+1] + curScore[i]; 
+				cumulScores[bowlIndex][(i/2)] += curScore[i+1] + curScore[i];
 				if (i > 1) {
 					//cumulScores[bowlIndex][i/2] += cumulScores[bowlIndex][i/2 -1];
 				}
@@ -495,12 +549,12 @@ public class Lane extends Thread implements PinsetterObserver {
 				} else {
 					break;
 				}
-			}else { 
+			}else {
 				//We're dealing with a normal throw, add it and be on our way.
 				if( i%2 == 0 && i < 18){
 					if ( i/2 == 0 ) {
 						//First frame, first ball.  Set his cumul score to the first ball
-						if(curScore[i] != -2){	
+						if(curScore[i] != -2){
 							cumulScores[bowlIndex][i/2] += curScore[i];
 						}
 					} else if (i/2 != 9){
@@ -509,9 +563,9 @@ public class Lane extends Thread implements PinsetterObserver {
 							cumulScores[bowlIndex][i/2] += cumulScores[bowlIndex][i/2 - 1] + curScore[i];
 						} else {
 							cumulScores[bowlIndex][i/2] += cumulScores[bowlIndex][i/2 - 1];
-						}	
+						}
 					}
-				} else if (i < 18){ 
+				} else if (i < 18){
 					if(curScore[i] != -1 && i > 2){
 						if(curScore[i] != -2){
 							cumulScores[bowlIndex][i/2] += curScore[i];
@@ -520,7 +574,7 @@ public class Lane extends Thread implements PinsetterObserver {
 				}
 				if (i/2 == 9){
 					if (i == 18){
-						cumulScores[bowlIndex][9] += cumulScores[bowlIndex][8];	
+						cumulScores[bowlIndex][9] += cumulScores[bowlIndex][8];
 					}
 					if(curScore[i] != -2){
 						cumulScores[bowlIndex][9] += curScore[i];
@@ -532,7 +586,14 @@ public class Lane extends Thread implements PinsetterObserver {
 				}
 			}
 		}
-		return totalScore;
+*/
+//        System.out.println("Returning: " + 0);
+//        System.out.print("Ending CumulScores-> ");
+//        for (int i = 0; i != 10; i++){
+//            System.out.print("<"+i+">"+cumulScores[bowlIndex][i]);
+//        }
+//        System.out.println();
+		return 0;
 	}
 
 	/** isPartyAssigned()
@@ -556,8 +617,6 @@ public class Lane extends Thread implements PinsetterObserver {
 	/** subscribe
 	 * 
 	 * Method that will add a subscriber
-	 * 
-	 * @param subscribe	Observer that is to be added
 	 */
 
 	public void subscribe( LaneObserver adding ) {
