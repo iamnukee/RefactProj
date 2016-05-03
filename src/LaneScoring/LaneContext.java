@@ -28,17 +28,8 @@ public class LaneContext {
         }
         boolean endOfScore = false;
         for(int x = 0 ; x < scoreArray.length && !endOfScore; x++ ){
-            System.out.println("<Ball: " + x);
+//            System.out.println("<Ball: " + x);
             ScoringState state = pickStratagy(scoreArray, x);
-
-            if(state instanceof OpenFrame){
-                System.out.println("OpenFrame;");
-            }else if(state instanceof Strike){
-                System.out.println("Strike");
-            }else if(state instanceof Spare){
-                System.out.println("Spare");
-            }
-
             state.getScore(x ,scoreArray, cumulScores, bowlerIndex);
             if(!(state instanceof OpenFrame)) x++;
             if(scoreArray[x+1] == -1) endOfScore = true;

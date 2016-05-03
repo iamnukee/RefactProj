@@ -440,22 +440,22 @@ public class Lane extends Thread implements PinsetterObserver {
          * For:
          * cumulScores, bowlIndex, scores, ball,
 		 */
-        System.out.println("<><><><><><><><><><><><><><><><><><><><><>");
-        System.out.println("@Params: Frame -> " + frame);
-        System.out.println("@LaneState:");
-        System.out.print("CumulScores-> ");
-        for (int i = 0; i != 10; i++){
-            System.out.print("<"+i+">"+cumulScores[bowlIndex][i]);
-        }
-        System.out.println();
-        System.out.println("BowlIndex: " + bowlIndex);
-        //Score is a hashmap with the bowler obj as a key and returns an int[]
-        System.out.print("Scores-> ");
-        for (int i = 0; i != ((int[])scores.get(cur)).length; i++){
-            System.out.print("<"+i+">" + ((int[])scores.get(cur))[i]);
-        }
-        System.out.println();
-        System.out.println("Ball: " + ball);
+//        System.out.println("<><><><><><><><><><><><><><><><><><><><><>");
+//        System.out.println("@Params: Frame -> " + frame);
+//        System.out.println("@LaneState:");
+//        System.out.print("CumulScores-> ");
+//        for (int i = 0; i != 10; i++){
+//            System.out.print("<"+i+">"+cumulScores[bowlIndex][i]);
+//        }
+//        System.out.println();
+//        System.out.println("BowlIndex: " + bowlIndex);
+//        //Score is a hashmap with the bowler obj as a key and returns an int[]
+//        System.out.print("Scores-> ");
+//        for (int i = 0; i != ((int[])scores.get(cur)).length; i++){
+//            System.out.print("<"+i+">" + ((int[])scores.get(cur))[i]);
+//        }
+//        System.out.println();
+//        System.out.println("Ball: " + ball);
         /**
          * Got Lane variable states
          */
@@ -590,12 +590,12 @@ public class Lane extends Thread implements PinsetterObserver {
 			}
 		}
 */
-        System.out.println("Returning: " + 0);
-        System.out.print("Ending CumulScores-> ");
-        for (int i = 0; i != 10; i++){
-            System.out.print("<"+i+">"+cumulScores[bowlIndex][i]);
-        }
-        System.out.println();
+//        System.out.println("Returning: " + 0);
+//        System.out.print("Ending CumulScores-> ");
+//        for (int i = 0; i != 10; i++){
+//            System.out.print("<"+i+">"+cumulScores[bowlIndex][i]);
+//        }
+//        System.out.println();
 		return 0;
 	}
 
