@@ -122,85 +122,117 @@ public class LaneView implements LaneObserver, ActionListener {
 		return panel;
 	}
 
-	public void receiveLaneEvent(LaneEvent le) {
+	public void receiveLaneEvent(LaneEvent laneEvent) {
 		if (lane.isPartyAssigned()) {
-			int numBowlers = le.getParty().getMembers().size();
-			while (!initDone) {
-				//System.out.println("chillin' here.");
-				try {
-					Thread.sleep(1);
-				} catch (Exception e) {
-				}
-			}
+			int numBowlers = laneEvent.getParty().getMembers().size();
+            waitForInitDone();
+            createLaneViewFrame(laneEvent);
+            //Version 1
 
-			if (le.getFrameNum() == 1
-				&& le.getBall() == 0
-				&& le.getIndex() == 0) {
-				System.out.println("Making the frame.");
-				cpanel.removeAll();
-				cpanel.add(makeFrame(le.getParty()), "Center");
+            LaneViewContext context = LaneViewContext.getContext();
+            context.update(laneEvent, numBowlers, laneEvent.getCumulScore(), bowlers);
+            context.labelFrame(scoreLabel, ballLabel);
 
-				// Button Panel
-				JPanel buttonPanel = new JPanel();
-				buttonPanel.setLayout(new FlowLayout());
+/*
+            //Original
+            int[][] lescores = laneEvent.getCumulScore();
+			for(int x = 0; x < lescores.length; x++){
+                for(int y = 0; y < lescores[0].length; y++){
+                    System.out.print(lescores[x][y] + ",");
+                }
+                System.out.println("\n");
+            }
 
-				Insets buttonMargin = new Insets(4, 4, 4, 4);
+            for (int k = 0; k < numBowlers; k++) {
+                int[] scores = ((int[]) ((HashMap) laneEvent.getScore()).get(bowlers.get(k)));
+                for(int x = 0 ; x < scores.length; x++){
+                    System.out.print(scores[x] + ",");
+                }
+                System.out.println("\n");
+            }
 
-				maintenance = new JButton("Maintenance Call");
-				JPanel maintenancePanel = new JPanel();
-				maintenancePanel.setLayout(new FlowLayout());
-				maintenance.addActionListener(this);
-				maintenancePanel.add(maintenance);
-
-				buttonPanel.add(maintenancePanel);
-
-				cpanel.add(buttonPanel, "South");
-
-				frame.pack();
-
-			}
-
-			int[][] lescores = le.getCumulScore();
 			for (int k = 0; k < numBowlers; k++) {
-				for (int i = 0; i <= le.getFrameNum() - 1; i++) {
-					if (lescores[k][i] != 0)
-						scoreLabel[k][i].setText(
-							(new Integer(lescores[k][i])).toString());
+				for (int i = 0; i <= laneEvent.getFrameNum() - 1; i++) {
+					if (lescores[k][i] != 0) {
+                        //scoreLabel[k][i].setText("" + lescores[k][i]);
+
+                        scoreLabel[k][i].setText(
+                        (new Integer(lescores[k][i])).toString());
+                    }
 				}
-				for (int i = 0; i < 21; i++) {
-					if (((int[]) ((HashMap) le.getScore())
+                for (int i = 0; i < 21; i++) {
+					if (((int[]) ((HashMap) laneEvent.getScore())
 						.get(bowlers.get(k)))[i]
-						!= -1)
-						if (((int[]) ((HashMap) le.getScore())
-							.get(bowlers.get(k)))[i]
-							== 10
-							&& (i % 2 == 0 || i == 19))
-							ballLabel[k][i].setText("X");
-						else if (
-							i > 0
-								&& ((int[]) ((HashMap) le.getScore())
-									.get(bowlers.get(k)))[i]
-									+ ((int[]) ((HashMap) le.getScore())
-										.get(bowlers.get(k)))[i
-									- 1]
-									== 10
-								&& i % 2 == 1)
-							ballLabel[k][i].setText("/");
-						else if ( ((int[])((HashMap) le.getScore()).get(bowlers.get(k)))[i] == -2 ){
-							
-							ballLabel[k][i].setText("F");
-						} else
-							ballLabel[k][i].setText(
-								(new Integer(((int[]) ((HashMap) le.getScore())
-									.get(bowlers.get(k)))[i]))
-									.toString());
+						!= -1) {
+                        //Strike
+                        if (((int[]) ((HashMap) laneEvent.getScore())
+                                .get(bowlers.get(k)))[i] == 10
+                                && (i % 2 == 0 || i == 19))
+                            ballLabel[k][i].setText("X");
+                            //Spare
+                        else if (i > 0 && ((int[]) ((HashMap) laneEvent.getScore())
+                                        .get(bowlers.get(k)))[i]
+                                        + ((int[]) ((HashMap) laneEvent.getScore())
+                                        .get(bowlers.get(k)))[i - 1] == 10
+                                        && i % 2 == 1) {
+                            ballLabel[k][i].setText("/");
+                            //Fowl
+                        } else if (((int[]) ((HashMap) laneEvent.getScore()).get(bowlers.get(k)))[i] == -2) {
+                            ballLabel[k][i].setText("F");
+                        } else {
+                            //OpenFrame
+                            ballLabel[k][i].setText((new Integer(((int[]) ((HashMap) laneEvent.getScore())
+                                            .get(bowlers.get(k)))[i]))
+                                            .toString());
+                        }
+                    }
 				}
 			}
+// */
 
 		}
 	}
 
-	public void actionPerformed(ActionEvent e) {
+    private void waitForInitDone() {
+        while (!initDone) {
+            //System.out.println("chillin' here.");
+            try {
+                Thread.sleep(1);
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    private void createLaneViewFrame(LaneEvent le) {
+        if (le.getFrameNum() == 1
+            && le.getBall() == 0
+            && le.getIndex() == 0) {
+            System.out.println("Making the frame.");
+            cpanel.removeAll();
+            cpanel.add(makeFrame(le.getParty()), "Center");
+
+            // Button Panel
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setLayout(new FlowLayout());
+
+            Insets buttonMargin = new Insets(4, 4, 4, 4);
+
+            maintenance = new JButton("Maintenance Call");
+            JPanel maintenancePanel = new JPanel();
+            maintenancePanel.setLayout(new FlowLayout());
+            maintenance.addActionListener(this);
+            maintenancePanel.add(maintenance);
+
+            buttonPanel.add(maintenancePanel);
+
+            cpanel.add(buttonPanel, "South");
+
+            frame.pack();
+
+        }
+    }
+
+    public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(maintenance)) {
 			lane.pauseGame();
 		}
