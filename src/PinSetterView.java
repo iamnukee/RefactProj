@@ -185,26 +185,27 @@ public class PinSetterView implements PinsetterObserver {
     
 
     public void receivePinsetterEvent(PinsetterEvent pe){
-	if ( !(pe.isFoulCommited()) ) {
-	    	JLabel tempPin = new JLabel ( );
-	    	for ( int c = 0; c < 10; c++ ) {
+		if ( !(pe.isFoulCommited()) ) {
+			JLabel tempPin = new JLabel ( );
+			for ( int c = 0; c < 10; c++ ) {
 				boolean pin = pe.pinKnockedDown ( c );
 				tempPin = (JLabel)pinVect.get ( c );
 				if ( pin ) {
-		    		tempPin.setForeground ( Color.lightGray );
+					tempPin.setForeground ( Color.lightGray );
 				}
-	    	}
+			}
     	}
 		if ( pe.getThrowNumber() == 1 ) {
-	   		 secondRoll.setBackground ( Color.yellow );
+			secondRoll.setBackground ( Color.yellow );
 		}
-	if ( pe.pinsDownOnThisThrow() == -1) {
-		for ( int i = 0; i != 10; i++){
-			((JLabel)pinVect.get(i)).setForeground(Color.black);
+		if ( pe.pinsDownOnThisThrow() == -1) {
+			for ( int i = 0; i != 10; i++){
+				((JLabel)pinVect.get(i)).setForeground(Color.black);
+			}
+			secondRoll.setBackground( Color.black);
 		}
-		secondRoll.setBackground( Color.black);
 	}
-    }
+
     
     public void show() {
     	frame.show();

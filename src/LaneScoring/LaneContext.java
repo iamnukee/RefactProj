@@ -29,14 +29,14 @@ public class LaneContext {
         boolean endOfScore = false;
         for(int x = 0 ; x < scoreArray.length && !endOfScore; x++ ){
 //            System.out.println("<Ball: " + x);
-            ScoringState state = pickStratagy(scoreArray, x);
+            ScoringState state = pickState(scoreArray, x);
             state.getScore(x ,scoreArray, cumulScores, bowlerIndex);
             if(!(state instanceof OpenFrame)) x++;
             if(scoreArray[x+1] == -1) endOfScore = true;
         }
     }
 
-    private ScoringState pickStratagy(int[] scoreArray, int ball) {
+    private ScoringState pickState(int[] scoreArray, int ball) {
         if(scoreArray[ball] == 10){
             //If its a Strike
             return new Strike();

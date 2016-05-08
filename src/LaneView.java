@@ -132,70 +132,11 @@ public class LaneView implements LaneObserver, ActionListener {
             LaneViewContext context = LaneViewContext.getContext();
             context.update(laneEvent, numBowlers, laneEvent.getCumulScore(), bowlers);
             context.labelFrame(scoreLabel, ballLabel);
-
-/*
-            //Original
-            int[][] lescores = laneEvent.getCumulScore();
-			for(int x = 0; x < lescores.length; x++){
-                for(int y = 0; y < lescores[0].length; y++){
-                    System.out.print(lescores[x][y] + ",");
-                }
-                System.out.println("\n");
-            }
-
-            for (int k = 0; k < numBowlers; k++) {
-                int[] scores = ((int[]) ((HashMap) laneEvent.getScore()).get(bowlers.get(k)));
-                for(int x = 0 ; x < scores.length; x++){
-                    System.out.print(scores[x] + ",");
-                }
-                System.out.println("\n");
-            }
-
-			for (int k = 0; k < numBowlers; k++) {
-				for (int i = 0; i <= laneEvent.getFrameNum() - 1; i++) {
-					if (lescores[k][i] != 0) {
-                        //scoreLabel[k][i].setText("" + lescores[k][i]);
-
-                        scoreLabel[k][i].setText(
-                        (new Integer(lescores[k][i])).toString());
-                    }
-				}
-                for (int i = 0; i < 21; i++) {
-					if (((int[]) ((HashMap) laneEvent.getScore())
-						.get(bowlers.get(k)))[i]
-						!= -1) {
-                        //Strike
-                        if (((int[]) ((HashMap) laneEvent.getScore())
-                                .get(bowlers.get(k)))[i] == 10
-                                && (i % 2 == 0 || i == 19))
-                            ballLabel[k][i].setText("X");
-                            //Spare
-                        else if (i > 0 && ((int[]) ((HashMap) laneEvent.getScore())
-                                        .get(bowlers.get(k)))[i]
-                                        + ((int[]) ((HashMap) laneEvent.getScore())
-                                        .get(bowlers.get(k)))[i - 1] == 10
-                                        && i % 2 == 1) {
-                            ballLabel[k][i].setText("/");
-                            //Fowl
-                        } else if (((int[]) ((HashMap) laneEvent.getScore()).get(bowlers.get(k)))[i] == -2) {
-                            ballLabel[k][i].setText("F");
-                        } else {
-                            //OpenFrame
-                            ballLabel[k][i].setText((new Integer(((int[]) ((HashMap) laneEvent.getScore())
-                                            .get(bowlers.get(k)))[i]))
-                                            .toString());
-                        }
-                    }
-				}
-			}
-// */
-
 		}
 	}
 
     private void waitForInitDone() {
         while (!initDone) {
-            //System.out.println("chillin' here.");
             try {
                 Thread.sleep(1);
             } catch (Exception e) {
