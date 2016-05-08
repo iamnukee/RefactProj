@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="56620a5f-d1f0-42b3-8272-c4a3011f7561" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/RefactProj/Lane.class" afterPath="$PROJECT_DIR$/out/production/RefactProj/Lane.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/RefactProj/LaneView.class" afterPath="$PROJECT_DIR$/out/production/RefactProj/LaneView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/RefactProj/PinSetterView.class" afterPath="$PROJECT_DIR$/out/production/RefactProj/PinSetterView.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="RefactProj.iws" />
@@ -665,7 +662,13 @@
       <option name="project" value="LOCAL" />
       <updated>1462737179121</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Deleted:&#10;commented code&#10;Unused interface LaneEventInterface &#10;">
+      <created>1462737218636</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1462737218636</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -679,7 +682,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="835" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32885906" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
